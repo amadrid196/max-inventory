@@ -12,6 +12,9 @@ var (
 	ErrUserAlreadyExists  = errors.New("user already exists")
 	ErrUserNotFound       = errors.New("user not found")
 	ErrInvalidCredentials = errors.New("invalid credentials")
+	ErrRoleAlreadyAdded   = errors.New("role already added this user")
+	ErrRoleNotFound       = errors.New("role not found")
+	ErrInvalidPermission  = errors.New("user does not have permission to add products")
 )
 
 func (s *serv) RegisterUsers(ctx context.Context, email, name, password string) error {
@@ -32,11 +35,13 @@ func (s *serv) RegisterUsers(ctx context.Context, email, name, password string) 
 
 func (s *serv) LoginUsers(ctx context.Context, email, password string) (*models.Users, error) {
 	u, err := s.repo.GetUserByEmail(ctx, email)
+
 	if err != nil {
 		return nil, err
 	}
 
 	bb, err := encryption.FromBase64(u.PASSWORD)
+
 	if err != nil {
 		return nil, err
 	}
@@ -50,4 +55,38 @@ func (s *serv) LoginUsers(ctx context.Context, email, password string) (*models.
 	}
 	return &models.Users{
 		ID: u.ID, Email: u.EMAIL, Name: u.NAME}, nil
+}
+
+func (s *serv) AddUserRole(ctx context.Context, userID, roleID int64) error {
+	roles, err := s.repo.GetUserRoles(ctx, userID)
+	if err != nil {
+		return err
+	}
+	for _, r := range roles {
+		if r.RoleID == roleID {
+			return ErrRoleAlreadyAdded
+		}
+	}
+	return s.repo.SaveUserRole(ctx, userID, roleID)
+}
+
+func (s *serv) RemoveUserRole(ctx context.Context, userID, roleID int64) error {
+	roles, err := s.repo.GetUserRoles(ctx, userID)
+	if err != nil {
+		return err
+	}
+
+	roleFound := false
+	for _, r := range roles {
+		if r.RoleID == roleID {
+			roleFound = true
+			break
+		}
+	}
+
+	if !roleFound {
+		return ErrRoleNotFound
+	}
+
+	return s.repo.RemoveUserRole(ctx, userID, roleID)
 }

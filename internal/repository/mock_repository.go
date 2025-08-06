@@ -41,6 +41,36 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
+// GetProduct mocks base method.
+func (m *MockRepository) GetProduct(ctx context.Context, id int64) (*entity.Products, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProduct", ctx, id)
+	ret0, _ := ret[0].(*entity.Products)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProduct indicates an expected call of GetProduct.
+func (mr *MockRepositoryMockRecorder) GetProduct(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProduct", reflect.TypeOf((*MockRepository)(nil).GetProduct), ctx, id)
+}
+
+// GetProducts mocks base method.
+func (m *MockRepository) GetProducts(ctx context.Context) ([]entity.Products, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProducts", ctx)
+	ret0, _ := ret[0].([]entity.Products)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProducts indicates an expected call of GetProducts.
+func (mr *MockRepositoryMockRecorder) GetProducts(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProducts", reflect.TypeOf((*MockRepository)(nil).GetProducts), ctx)
+}
+
 // GetUserByEmail mocks base method.
 func (m *MockRepository) GetUserByEmail(ctx context.Context, email string) (*entity.Users, error) {
 	m.ctrl.T.Helper()
@@ -56,16 +86,73 @@ func (mr *MockRepositoryMockRecorder) GetUserByEmail(ctx, email any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByEmail", reflect.TypeOf((*MockRepository)(nil).GetUserByEmail), ctx, email)
 }
 
-// SaveUser mocks base method.
-func (m *MockRepository) SaveUser(ctx context.Context, email, name, password string) error {
+// GetUserRoles mocks base method.
+func (m *MockRepository) GetUserRoles(ctx context.Context, userID int64) ([]*entity.UserRole, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SaveUser", ctx, email, name, password)
+	ret := m.ctrl.Call(m, "GetUserRoles", ctx, userID)
+	ret0, _ := ret[0].([]*entity.UserRole)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserRoles indicates an expected call of GetUserRoles.
+func (mr *MockRepositoryMockRecorder) GetUserRoles(ctx, userID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserRoles", reflect.TypeOf((*MockRepository)(nil).GetUserRoles), ctx, userID)
+}
+
+// RemoveUserRole mocks base method.
+func (m *MockRepository) RemoveUserRole(ctx context.Context, userID, roleID int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveUserRole", ctx, userID, roleID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// SaveUser indicates an expected call of SaveUser.
-func (mr *MockRepositoryMockRecorder) SaveUser(ctx, email, name, password any) *gomock.Call {
+// RemoveUserRole indicates an expected call of RemoveUserRole.
+func (mr *MockRepositoryMockRecorder) RemoveUserRole(ctx, userID, roleID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveUser", reflect.TypeOf((*MockRepository)(nil).SaveUser), ctx, email, name, password)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveUserRole", reflect.TypeOf((*MockRepository)(nil).RemoveUserRole), ctx, userID, roleID)
+}
+
+// SaveProduct mocks base method.
+func (m *MockRepository) SaveProduct(ctx context.Context, name, descripcion string, price float32, createBy int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SaveProduct", ctx, name, descripcion, price, createBy)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SaveProduct indicates an expected call of SaveProduct.
+func (mr *MockRepositoryMockRecorder) SaveProduct(ctx, name, descripcion, price, createBy any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveProduct", reflect.TypeOf((*MockRepository)(nil).SaveProduct), ctx, name, descripcion, price, createBy)
+}
+
+// SaveUserRole mocks base method.
+func (m *MockRepository) SaveUserRole(ctx context.Context, userID, roleID int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SaveUserRole", ctx, userID, roleID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SaveUserRole indicates an expected call of SaveUserRole.
+func (mr *MockRepositoryMockRecorder) SaveUserRole(ctx, userID, roleID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveUserRole", reflect.TypeOf((*MockRepository)(nil).SaveUserRole), ctx, userID, roleID)
+}
+
+// SaveUsers mocks base method.
+func (m *MockRepository) SaveUsers(ctx context.Context, email, name, password string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SaveUsers", ctx, email, name, password)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SaveUsers indicates an expected call of SaveUsers.
+func (mr *MockRepositoryMockRecorder) SaveUsers(ctx, email, name, password any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveUsers", reflect.TypeOf((*MockRepository)(nil).SaveUsers), ctx, email, name, password)
 }

@@ -17,7 +17,7 @@ create table products (
     id int auto_increment not null,
     name varchar(50) not null,
     description text,
-    price decimal(10, 2) not null,
+    price float not null,
     stock int not null,
     create_by int not null,
     created_at timestamp default current_timestamp,
@@ -41,4 +41,6 @@ create table user_roles (
     foreign key (user_id) references users(id) on delete cascade on update cascade,
     foreign key (role_id) references roles(id) on delete cascade on update cascade
 );
+
+insert into roles (id, name) values (1, 'admin'), (2, 'customer'), (3, 'seller');
 

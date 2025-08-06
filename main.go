@@ -7,7 +7,6 @@ import (
 	"github.com/amadrid196/max-inventory/internal/repository"
 	"github.com/amadrid196/max-inventory/internal/service"
 	"github.com/amadrid196/max-inventory/settings"
-	"github.com/jmoiron/sqlx"
 	"go.uber.org/fx"
 )
 
@@ -21,11 +20,8 @@ func main() {
 			service.New,
 		),
 		fx.Invoke(
-			func(db *sqlx.DB) {
-				_, err := db.Query("SELECT * FROM users")
-				if err != nil {
-					panic(err)
-				}
+			func(ctx context.Context, serv service.Service) {
+
 			},
 		),
 	)

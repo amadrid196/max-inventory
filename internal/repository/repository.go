@@ -13,6 +13,13 @@ import (
 type Repository interface {
 	SaveUsers(ctx context.Context, email, name, password string) error
 	GetUserByEmail(ctx context.Context, email string) (*entity.Users, error)
+
+	SaveUserRole(ctx context.Context, userID, roleID int64) error
+	RemoveUserRole(ctx context.Context, userID, roleID int64) error
+	GetUserRoles(ctx context.Context, userID int64) ([]*entity.UserRole, error)
+	SaveProduct(ctx context.Context, name, descripcion string, price float32, createBy int64) error
+	GetProducts(ctx context.Context) ([]entity.Products, error)
+	GetProduct(ctx context.Context, id int64) (*entity.Products, error)
 }
 
 type repo struct {

@@ -9,10 +9,10 @@ import (
 	"io"
 )
 
-const key = "012345678901234567890123456789012"
+var key = []byte("thisis32byteslongpassword1234567") // 32 bytes exactos
 
 func Encrypt(plaintext []byte) ([]byte, error) {
-	c, err := aes.NewCipher([]byte(key))
+	c, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func Encrypt(plaintext []byte) ([]byte, error) {
 }
 
 func Decrypt(ciphertext []byte) ([]byte, error) {
-	c, err := aes.NewCipher([]byte(key))
+	c, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
